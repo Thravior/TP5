@@ -127,21 +127,39 @@ int main()
 	VilainHeros kefkaCrono(vilains[2], heros[0]);
 	kefkaCrono.changerCouleur(cout,1);
 	kefkaCrono.afficher(cout);
+
 	#endif
+	cout << separateurSections;
 	//}
 
+	ListeLiee<Heros> ll = ListeLiee<Heros>();
 	//TODO: Transférez les héros du vecteur heros dans une ListeLiee.
-
+	for (auto h : heros) {
+		ll.push_back(h);
+	}
 	//TODO: Créez un itérateur sur la liste liée à la position du héros Alucard
 	// Servez-vous de la fonction trouverParNom définie plus haut
-
+	auto iterAlucard = trouverParNom(ll, "Alucard");
+	iterAlucard.operator*().afficher(cout);
 	//TODO: Servez-vous de l'itérateur créé précédemment pour trouver l'héroine Aya Brea,
 	// en sachant qu'elle se trouve plus loin dans la liste.
-
+	while (iterAlucard.operator*().getNom() != "Aya Brea") {
+		iterAlucard.avancer();
+	}
+	iterAlucard.operator*().afficher(cout);
 	//TODO: Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
 	//TODO: Assurez-vous que la taille de la liste est correcte après l'ajout.
+	Heros idiot = Heros("Guy", "Vie", "Mort");
+	cout << "Taille avant ajout: " << ll.size() << endl;
+	ll.insert(iterAlucard, idiot);
+	cout << "Taille apres ajout: " << ll.size() << endl;
 
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
+	while (iterAlucard.operator*().getNom() != "Mario") {
+		iterAlucard.reculer();
+	}
+	ll.erase(iterAlucard);
+	iterAlucard.operator*().afficher(cout);
 	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
 
 	//TODO: Effacez le premier élément de la liste.

@@ -34,3 +34,11 @@
 *.db-shm
 *.opendb
 *.db-wal
+TD5-A21-Fichiers/.vs/ProjetTD5/v16/.suo
+*.ipch
+*.user
+*.tlog
+*.pdb
+*.log
+*.recipe
+*.txt

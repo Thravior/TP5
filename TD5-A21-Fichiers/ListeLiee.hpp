@@ -7,12 +7,23 @@ class ListeLiee
 {
 public:
 	//TODO: La construction par défaut doit créer une liste vide valide.
+	ListeLiee() = default;
+
 	~ListeLiee()
 	{
 		//TODO: Enlever la tête à répétition jusqu'à ce qu'il ne reste aucun élément.
 		// Pour enlever la tête, 
 		// 1. La tête doit devenir le suivant de la tête actuelle.
 		// 2. Ne pas oublier de désallouer le noeud de l'ancienne tête (si pas fait automatiquement).
+		if (estVide()) {}
+		else {
+			while (tete_->suivant_ != nullptr) {
+				Noeud<T>* temp = tete_;
+				tete_ = tete_->suivant_;
+				delete temp;
+			}
+			delete tete_;
+		}
 	}
 
 	bool estVide() const  { return taille_ == 0; }
@@ -27,6 +38,16 @@ public:
 		//TODO: Vous devez créer un nouveau noeud en mémoire.
 		//TODO: Si la liste était vide, ce nouveau noeud est la tête et la queue;
 		// autrement, ajustez la queue et pointeur(s) adjacent(s) en conséquence.
+		Noeud<T>* nouveau = new Noeud<T>(item);
+		if (estVide()) {
+			tete_ = nouveau;
+		}
+		else {
+			queue_->suivant_ = nouveau;
+			nouveau->precedent_ = queue_;
+		}
+		queue_ = nouveau;
+		taille_++;
 	}
 
 	// Insère avant la position de l'itérateur.
@@ -48,6 +69,20 @@ public:
 		//    (précédent de l'itérateur) afin qu'il point vers le noeud créé.
 		// 5. Incrémentez la taille de la liste.
 		// 6. Retournez un nouvel itérateur initialisé au nouveau noeud.
+		if (it.position_ == Noeud<T>::finListe) {
+			push_back(item);
+			return Iterateur(queue_);
+		}
+		else {
+			Noeud<T>* nouveau = new Noeud<T>(item);
+			nouveau->suivant_ = it.position_;
+			nouveau->precedent_ = nouveau->suivant_->precedent_;
+
+			nouveau->suivant_->precedent_ = nouveau;
+			nouveau->precedent_->suivant_ = nouveau;
+			taille_++;
+			return Iterateur(nouveau);
+		}
 	}
 
 	// Enlève l'élément à la position it et retourne un itérateur vers le suivant.
@@ -67,6 +102,21 @@ public:
 		//  donc en 2. il se peut qu'il n'y ait pas de précédent et alors c'est
 		//  la tête de liste qu'il faut ajuster.
 		//NOTE: On ne demande pas de supporter d'effacer le dernier élément (c'est similaire au cas pour enlever le premier).
+
+		Noeud<T>* avant = it.position_->precedent_;
+		Noeud<T>* apres = it.position_->suivant_;
+
+		if (avant = Noeud<T>::finListe) {
+			tete_ = apres;
+		}
+		else {
+			avant->suivant_ = apres;
+		}
+
+		apres->precedent_ = avant;
+		delete it.position_;
+		taille_--;
+		return Iterateur(apres);
 	}
 
 private:
