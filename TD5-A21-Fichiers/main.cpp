@@ -8,11 +8,18 @@
 #include <functional>
 #include "cppitertools/range.hpp"
 #include "bibliotheque_cours.hpp"
+#include <map>
 using namespace std;
 using namespace iter;
 
 using UInt8  = uint8_t;
 using UInt16 = uint16_t;
+
+struct MaComparaison{
+	bool operator() (const string& nom1, const string& nom2) const {
+		return nom1 < nom2;
+}
+};
 
 UInt8 lireUint8(istream& fichier)
 {
@@ -143,34 +150,59 @@ int main()
 	iterAlucard.operator*().afficher(cout);
 	//TODO: Servez-vous de l'itérateur créé précédemment pour trouver l'héroine Aya Brea,
 	// en sachant qu'elle se trouve plus loin dans la liste.
-	while (iterAlucard.operator*().getNom() != "Aya Brea") {
+	while (iterAlucard != trouverParNom(ll, "Aya Brea")) {
 		iterAlucard.avancer();
 	}
 	iterAlucard.operator*().afficher(cout);
+
+	cout << endl << separateurSections << endl;
+
 	//TODO: Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
 	//TODO: Assurez-vous que la taille de la liste est correcte après l'ajout.
 	Heros idiot = Heros("Guy", "Vie", "Mort");
 	cout << "Taille avant ajout: " << ll.size() << endl;
 	ll.insert(iterAlucard, idiot);
-	cout << "Taille apres ajout: " << ll.size() << endl;
+	cout << "Taille apres ajout: " << ll.size() << endl << endl;
+	cout << endl << separateurSections << endl;
 
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
-	while (iterAlucard.operator*().getNom() != "Mario") {
+	while (iterAlucard != trouverParNom(ll, "Mario")) {
 		iterAlucard.reculer();
 	}
-	ll.erase(iterAlucard);
+
+	iterAlucard = ll.erase(iterAlucard);
 	iterAlucard.operator*().afficher(cout);
+
 	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
-
+	cout << "Taille apres erase: " << ll.size() << endl;
 	//TODO: Effacez le premier élément de la liste.
-
+	ll.erase(ll.begin());
+	
 	//TODO: Affichez votre liste de héros en utilisant un itérateur. La liste débute
 	// avec le héros Randi et n'a pas Mario.
 	// Servez-vous des methodes begin et end de la liste...
-
+	cout << endl << separateurSections << endl;
+	for (Iterateur iter = ll.begin(); iter != ll.end(); iter.avancer()) {
+		iter.operator*().afficher(cout);
+		cout << separateurElements << endl;
+	}
+	cout << endl << separateurSections << endl;
 	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
-	
-	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
+	auto iter = ll.begin();
+	for ([[maybe_unused]] unsigned i = 0; i < ll.size(); ++i) {
+		iter.operator*().afficher(cout);
+		cout << separateurElements << endl;
+		iter.avancer();
+	}
 
+	cout << endl << separateurSections << endl;
+	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
+	map<string,Heros,MaComparaison> mapHeros;
+	for (auto h : heros) {
+		mapHeros.insert(pair<string,Heros>(h.getNom(),h));
+	}
+	mapHeros["Alucard"].afficher(cout);
+	// liste lie trouve l'element en tmeps lineaire O(n); mapHero trouve l'element en temps constant selon le nom,  de par le choix de cle O(1) temps lineaire pour tout autre critere
 	//TODO: Assurez-vous de n'avoir aucune ligne non couverte dans les classes pour la liste liée.  Il peut y avoir des lignes non couvertes dans les personnages...
+
 }

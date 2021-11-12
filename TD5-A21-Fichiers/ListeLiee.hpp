@@ -106,7 +106,7 @@ public:
 		Noeud<T>* avant = it.position_->precedent_;
 		Noeud<T>* apres = it.position_->suivant_;
 
-		if (avant = Noeud<T>::finListe) {
+		if (avant == Noeud<T>::finListe) {
 			tete_ = apres;
 		}
 		else {
