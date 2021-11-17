@@ -19,7 +19,7 @@ class Noeud
 {
 public:
 	Noeud() {}
-	Noeud(const T& donnee)
+	Noeud(const T& donnee)	
 	{
 		donnee_ = donnee;
 	}
@@ -28,7 +28,7 @@ private:
 	friend class ListeLiee<T>;
 	friend class Iterateur<T>;
 
-	T donnee_;
+	T	   donnee_;
 	Noeud* precedent_						= finListe;
 	Noeud* suivant_							= finListe;
 	inline static constexpr Noeud* finListe = nullptr;

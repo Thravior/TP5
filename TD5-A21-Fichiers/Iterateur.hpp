@@ -25,6 +25,7 @@ public:
 		Expects(position_ != nullptr);
 		position_ = position_->suivant_;
 	}
+
 	void reculer()
 	{
 		//NOTE: On ne demande pas de supporter de reculer à partir de l'itérateur end().
@@ -32,10 +33,7 @@ public:
 		position_ = position_->precedent_;
 	}
 
-	T& operator*()
-	{
-		return position_->donnee_;
-	}
+	T& operator*()	{return position_->donnee_; }
 
 	bool operator==(const Iterateur<T>& it) const = default;
 

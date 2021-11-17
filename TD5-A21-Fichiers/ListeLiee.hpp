@@ -22,7 +22,7 @@ public:
 
 	~ListeLiee()
 	{
-		if (!estVide()){
+		if (!estVide()) {
 			while (tete_->suivant_ != nullptr) {
 				Noeud<T>* temp = tete_;
 				tete_ = tete_->suivant_;
@@ -81,9 +81,9 @@ public:
 		Noeud<T>* avant = it.position_->precedent_;
 		Noeud<T>* apres = it.position_->suivant_;
 
-		if (avant == Noeud<T>::finListe) {
+		if (avant == Noeud<T>::finListe) 
 			tete_ = apres;
-		}
+
 		else {
 			avant->suivant_ = apres;
 		}
@@ -91,6 +91,7 @@ public:
 		apres->precedent_ = avant;
 		delete it.position_;
 		taille_--;
+		
 		return Iterateur(apres);
 	}
 

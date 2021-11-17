@@ -110,26 +110,10 @@ int main()
 	static const string separateurSections = "\033[95m" + trait + "\033[0m\n";
 	static const string separateurElements = "\033[33m" + trait + "\033[0m\n";
 
-	//{ Solutionnaire du TD4:
-	vector<Heros>					heros	= lireFichier<Heros>("heros.bin");
-	vector<Vilain>					vilains = lireFichier<Vilain>("vilains.bin");
-	vector<unique_ptr<Personnage>>	peronnages;  // Doit être des pointeurs pour le polymorphisme, l'énoncé ne force pas les unique_ptr.
-
 	
-	for (auto& h : heros)
-		peronnages.push_back(make_unique<Heros>(h));
-
-	for (auto& v : vilains)
-		peronnages.push_back(make_unique<Vilain>(v));
-
-	peronnages.push_back(make_unique<VilainHeros>(vilains[1], heros[2]));
-
-	
-	VilainHeros kefkaCrono(vilains[2], heros[0]);
-	kefkaCrono.changerCouleur(cout,1);
-	kefkaCrono.afficher(cout);
-
-	
+	vector<Heros>				   heros   = lireFichier<Heros>("heros.bin");
+	vector<Vilain>				   vilains = lireFichier<Vilain>("vilains.bin");
+	vector<unique_ptr<Personnage>> peronnages;  // Doit être des pointeurs pour le polymorphisme, l'énoncé ne force pas les unique_ptr.
 
 	/****************************************************************************/
 	/*********************************** TP 5 ***********************************/
@@ -232,8 +216,5 @@ int main()
 	/* une map (soit le conteneur). Notons tout de meme que si nous effectuons*/
 	/* une recherche sur un autre element, le temps de recherche pour la map  */
 	/* serait lineaire comme la liste lie.									  */
-	
-	
-	//TODO: Assurez-vous de n'avoir aucune ligne non couverte dans les classes pour la liste liée.  Il peut y avoir des lignes non couvertes dans les personnages...
 
 }
