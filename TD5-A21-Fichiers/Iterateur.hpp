@@ -1,12 +1,22 @@
-﻿#pragma once
+﻿/******************************************************************************
+* Programme qui creer la classe Iterateur. Cette classe permet d'obtenir un
+* iterateur sur notre liste liee. Elle nous permettera de parcourir la liste en
+* avancant ou en reculant dedans.
+* \file   Iterateur.hpp
+* \author Laurie Bedard-Cote (2086165) et Mathias Gagnon (2115246)
+* \date  12 novembre 2021
+* \cree  9 novembre 2021
+******************************************************************************/
+
+#pragma once
 #include "noeud.hpp"
 #include "gsl/gsl_assert"
 template<typename T>
 class Iterateur
 {
 public:
-	//TODO: Constructeur(s).
-	Iterateur(Noeud<T>* position = Noeud<T>::finListe) {
+	Iterateur(Noeud<T>* position = Noeud<T>::finListe) 
+	{
 		position_ = position;
 	}
 

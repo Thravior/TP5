@@ -1,4 +1,16 @@
-﻿#pragma once
+﻿/******************************************************************************
+* Programme creer la classe ListeLiee. Elle nous permet de verifier si la liste
+* est vide et elle nous donne sa taille. Nous pouvons ensuite trouver le debut 
+* et la fin de cette liste (c'est une liste double). Finalement, les methodes 
+* de la classe nous permettront d'ajouter un item en fin de liste, d'ajouter un
+* item apres un iterateur et d'effacer un item.
+* \file   ListeLiee.hpp
+* \author Laurie Bedard-Cote (2086165) et Mathias Gagnon (2115246)
+* \date  12 novembre 2021
+* \cree  9 novembre 2021
+******************************************************************************/
+
+#pragma once
 #include "iterateur.hpp"
 #include "gsl/gsl_assert"
 template<typename T> class Iterateur;

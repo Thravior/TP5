@@ -1,4 +1,16 @@
-﻿#include "Personnage.hpp"
+﻿/******************************************************************************
+* Programme qui teste la liste liee en ajoutant un element, en faisant une
+* recherche, en avancant et reculant dans la liste, et en supprimant un
+* element de la liste. Finalement, nous avons choisi une map comme
+* conteneur pour trier nos elements en ordre alphabetique. Notre reponse
+* a la question 2.3 du TP se retrouve a la fin du fichier.
+* \file   main.cpp
+* \author Laurie Bedard-Cote (2086165) et Mathias Gagnon (2115246)
+* \date  12 novembre 2021
+* \cree  9 novembre 2021
+******************************************************************************/
+
+#include "Personnage.hpp"
 #include "Heros.hpp"
 #include "Vilain.hpp"
 #include "VilainHeros.hpp"
