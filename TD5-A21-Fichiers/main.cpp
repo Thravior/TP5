@@ -15,10 +15,12 @@ using namespace iter;
 using UInt8  = uint8_t;
 using UInt16 = uint16_t;
 
-struct MaComparaison{
-	bool operator() (const string& nom1, const string& nom2) const {
+struct MaComparaison
+{
+	bool operator() (const string& nom1, const string& nom2) const 
+	{
 		return nom1 < nom2;
-}
+	}
 };
 
 UInt8 lireUint8(istream& fichier)
@@ -97,25 +99,11 @@ int main()
 	static const string separateurElements = "\033[33m" + trait + "\033[0m\n";
 
 	//{ Solutionnaire du TD4:
-	vector<Heros> heros = lireFichier<Heros>("heros.bin");
-	vector<Vilain> vilains = lireFichier<Vilain>("vilains.bin");
-	vector<unique_ptr<Personnage>> peronnages;  // Doit être des pointeurs pour le polymorphisme, l'énoncé ne force pas les unique_ptr.
+	vector<Heros>					heros	= lireFichier<Heros>("heros.bin");
+	vector<Vilain>					vilains = lireFichier<Vilain>("vilains.bin");
+	vector<unique_ptr<Personnage>>	peronnages;  // Doit être des pointeurs pour le polymorphisme, l'énoncé ne force pas les unique_ptr.
 
-	#if 1 //TODO: Vous n'avez pas à conserver ces affichages pour le TD5, ils sont pour le solutionnaire du TD4:
-	cout << separateurSections << "Heros:" << endl;
-	for (auto& h : heros) {
-		cout << separateurElements;
-		h.changerCouleur(cout, 0);
-		h.afficher(cout);
-	}
-
-	cout << separateurSections << "Vilains:" << endl;
-	for (auto& v : vilains) {
-		cout << separateurElements;
-		v.changerCouleur(cout, 0);
-		v.afficher(cout);
-	}
-
+	
 	for (auto& h : heros)
 		peronnages.push_back(make_unique<Heros>(h));
 
@@ -124,85 +112,116 @@ int main()
 
 	peronnages.push_back(make_unique<VilainHeros>(vilains[1], heros[2]));
 
-	cout << separateurSections << "Personnages:" << endl;
-	for (auto& p : peronnages) {
-		cout << separateurElements;
-		p->changerCouleur(cout, 0);
-		p->afficher(cout);
-	}
-	cout << separateurSections << "Un autre vilain heros (exemple de l'énoncé du TD):" << endl;
+	
 	VilainHeros kefkaCrono(vilains[2], heros[0]);
 	kefkaCrono.changerCouleur(cout,1);
 	kefkaCrono.afficher(cout);
 
-	#endif
-	cout << separateurSections;
-	//}
+	
+
+	/****************************************************************************/
+	/*********************************** TP 5 ***********************************/
+	/****************************************************************************/
 
 	ListeLiee<Heros> ll = ListeLiee<Heros>();
+	
 	//TODO: Transférez les héros du vecteur heros dans une ListeLiee.
-	for (auto h : heros) {
+	for (auto h : heros) 
 		ll.push_back(h);
-	}
+	
 	//TODO: Créez un itérateur sur la liste liée à la position du héros Alucard
 	// Servez-vous de la fonction trouverParNom définie plus haut
-	auto iterAlucard = trouverParNom(ll, "Alucard");
-	iterAlucard.operator*().afficher(cout);
+	cout << "Creation de l'iterateur a la position du hero Alucard : " << endl;
+	
+	auto iterateur = trouverParNom(ll, "Alucard");
+	iterateur.operator*().afficher(cout);
+	
+	cout << endl << separateurSections << endl;
+
 	//TODO: Servez-vous de l'itérateur créé précédemment pour trouver l'héroine Aya Brea,
 	// en sachant qu'elle se trouve plus loin dans la liste.
-	while (iterAlucard != trouverParNom(ll, "Aya Brea")) {
-		iterAlucard.avancer();
+	cout << endl << "Avancer jusqu'a Aya Brea : " << endl;
+	
+	while (iterateur != trouverParNom(ll, "Aya Brea")) {
+		iterateur.avancer();
 	}
-	iterAlucard.operator*().afficher(cout);
+	iterateur.operator*().afficher(cout);
 
 	cout << endl << separateurSections << endl;
 
 	//TODO: Ajouter un hero bidon à la liste avant Aya Brea en vous servant de l'itérateur.
 	//TODO: Assurez-vous que la taille de la liste est correcte après l'ajout.
-	Heros idiot = Heros("Guy", "Vie", "Mort");
+	cout << "Ajout d'un hero bidon avant Aya Brea : " << endl;
+	
+	Heros heroBidon = Heros("Guy", "Vie", "Mort");
 	cout << "Taille avant ajout: " << ll.size() << endl;
-	ll.insert(iterAlucard, idiot);
+	ll.insert(iterateur, heroBidon);
+	
 	cout << "Taille apres ajout: " << ll.size() << endl << endl;
 	cout << endl << separateurSections << endl;
 
 	//TODO: Reculez votre itérateur jusqu'au héros Mario et effacez-le en utilisant l'itérateur, puis affichez le héros suivant dans la liste (devrait êter "Naked Snake/John").
-	while (iterAlucard != trouverParNom(ll, "Mario")) {
-		iterAlucard.reculer();
+	while (iterateur != trouverParNom(ll, "Mario")) {
+		iterateur.reculer();
 	}
 
-	iterAlucard = ll.erase(iterAlucard);
-	iterAlucard.operator*().afficher(cout);
+	cout << endl <<  "Une fois l'hero Mario supprime, affichage du hero suivant : " << endl;
+	
+	iterateur = ll.erase(iterateur);
+	iterateur.operator*().afficher(cout);
 
 	//TODO: Assurez-vous que la taille de la liste est correcte après le retrait.
 	cout << "Taille apres erase: " << ll.size() << endl;
+	
 	//TODO: Effacez le premier élément de la liste.
 	ll.erase(ll.begin());
 	
+	cout << endl << separateurSections << endl;
+
 	//TODO: Affichez votre liste de héros en utilisant un itérateur. La liste débute
 	// avec le héros Randi et n'a pas Mario.
 	// Servez-vous des methodes begin et end de la liste...
-	cout << endl << separateurSections << endl;
+	cout << "AFFICHAGE 1 : " << endl;
 	for (Iterateur iter = ll.begin(); iter != ll.end(); iter.avancer()) {
 		iter.operator*().afficher(cout);
 		cout << separateurElements << endl;
 	}
 	cout << endl << separateurSections << endl;
+
 	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
+	cout << endl << separateurSections << endl;
+	cout << "AFFICHAGE 2 : " << endl;
 	auto iter = ll.begin();
 	for ([[maybe_unused]] unsigned i = 0; i < ll.size(); ++i) {
 		iter.operator*().afficher(cout);
 		cout << separateurElements << endl;
 		iter.avancer();
 	}
-
 	cout << endl << separateurSections << endl;
-	//TODO: Utilisez un conteneur pour avoir les héros en ordre alphabétique (voir point 2 de l'énoncé).
-	map<string,Heros,MaComparaison> mapHeros;
+
+	/****************************************************************************/
+	/***************************** PARTIE 2 *************************************/
+	/****************************************************************************/
+	//Utilisez un conteneur pour avoir les héros en ordre alphabétique
+	// map classe les cles par ordre alphabetique
+
+	map<string,Heros> mapHeros;
 	for (auto h : heros) {
 		mapHeros.insert(pair<string,Heros>(h.getNom(),h));
 	}
 	mapHeros["Alucard"].afficher(cout);
-	// liste lie trouve l'element en tmeps lineaire O(n); mapHero trouve l'element en temps constant selon le nom,  de par le choix de cle O(1) temps lineaire pour tout autre critere
+
+	cout << endl << separateurSections << endl;
+
+	/* REPONSE A LA QUESTION 2.3 */
+	/* Sachant que le temps pour rechercher un hero par son nom avec la liste */
+	/* lie est lineaire O(1), et qu'avec une map le temps est constant O(n),  */
+	/* on peut affimer qu'il est plus rapide de faire cette recherche avec	  */
+	/* une map (soit le conteneur). Notons tout de meme que si nous effectuons*/
+	/* une recherche sur un autre element, le temps de recherche pour la map  */
+	/* serait lineaire comme la liste lie.									  */
+	
+	
 	//TODO: Assurez-vous de n'avoir aucune ligne non couverte dans les classes pour la liste liée.  Il peut y avoir des lignes non couvertes dans les personnages...
 
 }
