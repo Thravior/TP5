@@ -33,9 +33,12 @@ public:
 		position_ = position_->precedent_;
 	}
 
-	T& operator*()	{return position_->donnee_; }
+	T& operator*()		{return position_->donnee_; }
 
 	bool operator==(const Iterateur<T>& it) const = default;
+
+	bool operator++()	{return position_ = position_->suivant_;}
+
 
 private:
 	Noeud<T>* position_;

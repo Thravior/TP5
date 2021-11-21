@@ -184,16 +184,14 @@ int main()
 	}
 	cout << endl << separateurSections << endl;
 
-	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
-	cout << endl << separateurSections << endl;
 	cout << "AFFICHAGE 2 : " << endl;
-	auto iter = ll.begin();
-	for ([[maybe_unused]] unsigned i = 0; i < ll.size(); ++i) {
-		iter.operator*().afficher(cout);
+	//TODO: Refaite le même affichage mais en utilisant une simple boucle "for" sur intervalle.
+	for (auto h : ll) {
+		h.afficher(cout);
 		cout << separateurElements << endl;
-		iter.avancer();
 	}
 	cout << endl << separateurSections << endl;
+	
 
 	/****************************************************************************/
 	/***************************** PARTIE 2 *************************************/
@@ -205,16 +203,18 @@ int main()
 	for (auto h : heros) {
 		mapHeros.insert(pair<string,Heros>(h.getNom(),h));
 	}
+
 	mapHeros["Alucard"].afficher(cout);
 
 	cout << endl << separateurSections << endl;
 
 	/* REPONSE A LA QUESTION 2.3 */
 	/* Sachant que le temps pour rechercher un hero par son nom avec la liste */
-	/* lie est lineaire O(1), et qu'avec une map le temps est constant O(n),  */
-	/* on peut affimer qu'il est plus rapide de faire cette recherche avec	  */
-	/* une map (soit le conteneur). Notons tout de meme que si nous effectuons*/
-	/* une recherche sur un autre element, le temps de recherche pour la map  */
-	/* serait lineaire comme la liste lie.									  */
+	/* lie est lineaire O(n), et qu'avec une map le temps est selon une		  */
+	/* relation logarithmique O(logn), on peut affirmer que la rapidite de la */
+	/* recherche dependera du nombre d'elements dans la liste. Par contre, la */
+	/* map sera toujours plus rapide que la liste.							  */
+
+	
 
 }
